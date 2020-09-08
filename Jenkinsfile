@@ -29,7 +29,7 @@ pipeline {
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"
 				sh "sudo python -m pip install pylint"
-				sh "sudo yum install xmlrunner junit"
+				sh "sudo yum install xmlrunner junit -y"
 				// sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"

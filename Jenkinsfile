@@ -43,7 +43,7 @@ pipeline {
 			}
 			steps{
 				// sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py || return 0 "
-				sh "python -m unittest tests/test_routes.py"				
+				sh "python unittest tests/test_routes.py"				
 				echo " Test stage completed Successfully"
 				// sh " shell script"
 			}

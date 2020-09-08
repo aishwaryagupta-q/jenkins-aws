@@ -23,11 +23,11 @@ pipeline {
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
 				sh "sudo yum update -y"
-				sh "sudo yum install python3 -y"
-				sh	"sudo yum install python3-venv -y"
-				sh	"python3 -m venv venv"
+				sh "sudo yum install python -y"
+				sh	"sudo yum install python-venv -y"
+				sh	"python -m venv venv"
 				sh	". venv/bin/activate"
-				sh "pip3 install -r requirements.txt --user"
+				sh "pip install -r requirements.txt --user"
 				// sh "sudo easy_install pip"
 				sh "sudo yum install -y pylint"
 				//  change
@@ -43,7 +43,7 @@ pipeline {
 			}
 			steps{
 				sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py || return 0 "
-				sh "python3 -m unittest tests/test_routes.py"				
+				sh "python -m unittest tests/test_routes.py"				
 				echo " Test stage completed Successfully"
 				// sh " shell script"
 			}

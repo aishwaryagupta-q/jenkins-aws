@@ -29,7 +29,7 @@ pipeline {
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"
 				// sh "sudo easy_install pip"
-				sh "sudo yum install -y pylint"
+				// sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"
 				// sh "python3 --version"

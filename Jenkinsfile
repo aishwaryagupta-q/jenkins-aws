@@ -25,7 +25,7 @@ pipeline {
 				sh "sudo yum update -y"
 				sh "sudo yum install -y python "
 				sh	"sudo yum install python-virtualenv -y"
-				sh	"python -m venv venv"
+				sh	"python -m virtualenv venv"
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"
 				// sh "sudo easy_install pip"

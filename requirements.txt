@@ -1,0 +1,13 @@
+Flask==0.12.2
+iniconfig==1.0.1
+isort==5.5.1
+itsdangerous==1.1.0
+Jinja2==2.8
+lazy-object-proxy==1.4.3
+more-itertools==8.5.0
+py==1.9.0
+pylint==2.6.0
+Werkzeug==0.13
+xmlrunner
+gunicorn==19.5.0
+gevent==20.6.2

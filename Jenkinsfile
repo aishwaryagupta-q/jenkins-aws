@@ -22,14 +22,14 @@ pipeline {
 			}
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
-				sh "sudo apt-get update -y"
-				sh "sudo apt-get install python3 -y"
-				sh	"sudo apt-get install python3-venv -y"
+				sh "sudo yum update -y"
+				sh "sudo yum install python3 -y"
+				sh	"sudo yum install python3-venv -y"
 				sh	"python3 -m venv venv"
 				sh	". venv/bin/activate"
 				sh "pip3 install -r requirements.txt --user"
 				// sh "sudo easy_install pip"
-				sh "sudo apt-get install -y pylint"
+				sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"
 				// sh "python3 --version"

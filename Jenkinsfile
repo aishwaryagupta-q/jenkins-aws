@@ -24,7 +24,7 @@ pipeline {
 				// sh "jenkins  ALL= NOPASSWD: ALL"
 				sh "sudo yum update -y"
 				sh "sudo yum install -y python "
-				sh	"sudo yum install virtualenv -y"
+				sh	"sudo yum install python-virtualenv -y"
 				sh	"python -m venv venv"
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"

@@ -28,7 +28,7 @@ pipeline {
 				sh	"python -m virtualenv venv"
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"
-				// sh "sudo easy_install pip"
+				sh "sudo python -m pip install pylint"
 				// sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"

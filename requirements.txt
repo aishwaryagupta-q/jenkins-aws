@@ -8,4 +8,3 @@ pylint
 Werkzeug==0.13
 xmlrunner
 gunicorn
-gevent

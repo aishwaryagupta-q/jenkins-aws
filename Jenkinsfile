@@ -1,13 +1,11 @@
 pipeline {
 	agent any
-	// tools {
-	// 	// jdk 'name of installation in jenkins'
-	// }
+
 	parameters{
 		// booleanParam(name: 'executeTests',defaultValue: true, description:"")
 		choice(
 			name: 'REQUESTED_ACTION',
-            choices: ['Proceed' , 'Stop'],
+            choices: ['Build' , 'Test', "Deploy"],
             description: '')
 	}
 	environment{
@@ -17,20 +15,12 @@ pipeline {
 	}
 	stages {
 		stage("build"){
-			when{
-				expression {params.REQUESTED_ACTION == 'Proceed'}
-			}
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
 				sh	"sudo yum install python-virtualenv -y"
 				sh	"python3 -m venv venv"
 				sh	"source venv/bin/activate"
 				sh "python3 -m pip install -r requirements.txt --user"
-				// sh "sudo python -m pip install pylint"
-				sh "sudo yum install xmlrunner junit -y"
-				// sh "sudo yum install -y pylint"
-				//  change
-				// sh "export PATH=$HOME/.local/bin:$PATH"
 				sh "python3 -m pip install pylint"
 				echo " BUILD stage completed Successfully"
 		
@@ -38,7 +28,7 @@ pipeline {
 		}
 		stage("test"){
 			when{
-				expression {params.REQUESTED_ACTION == 'Proceed'}
+				expression {params.REQUESTED_ACTION == 'Test' ||params.REQUESTED_ACTION == 'Deploy'}
 			}
 			steps{
 				sh "python3 -m pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py --exit-zero"
@@ -50,13 +40,33 @@ pipeline {
 		}
 		stage("deploy"){
 			when{
-				expression {params.REQUESTED_ACTION == 'Proceed'}
+				expression {params.REQUESTED_ACTION == 'Deploy'}
 			}
-			steps{
-				// sh "startup_script.sh"
-				// sh "gcloud compute scp "			
-				echo " Test stage completed Successfully"
-				// sh " shell script"
+			steps([$class: 'BapSshPromotionPublisherPlugin']) {
+				sshPublisher(
+					continueOnError: false, failOnError: true,
+					publishers: [
+						sshPublisherDesc(
+							configName: "aishwarya-jankins-deployment",
+							verbose:  	true,
+							transfers:[
+								sshTransfer (execCommand: "/bin/rm -rf jankins-app")
+								sshTransfer (execCommand: "/bin/mkdir jankins-app")
+								sshTransfer (sourceFiles:  "*",)
+								sshTransfer (execCommand: "/bin/mkdir jankins-app/templates")
+								sshTransfer (sourceFiles: "templates/*",)
+								sshTransfer (execCommand: "/bin/mkdir jankins-app/static")
+								sshTransfer (sourceFiles: "static/*",)
+								sshTransfer (execCommand: "/bin/mkdir jankins-app/tests")
+								sshTransfer (sourceFiles: "tests/*",)
+								sshTransfer (execCommand: "/bin/python3 -m venv venv")
+								sshTransfer (execCommand: ". venv/bin/activate")
+								sshTransfer (execCommand: "/bin/pip3 install -r requirements.txt --user")
+								sshTransfer (execCommand: "/bin/python3 appl.py &")
+							]
+							)
+					]
+					)
 			}
 		}
 
@@ -67,15 +77,17 @@ pipeline {
 	post{
 		always{
 			// always executed
-			echo " always post"
-			junit 'test-reports/*.xml'
+			echo "All Executed"
+			// cleanup
 			deleteDir()
+			cleanWs()
+
 		}
 		success {
-			echo "success post"
+			echo " Successfully"
 		}
 		failure {
-			echo "failure post"
+			echo " with failures in the pipeline"
 
 		}
 

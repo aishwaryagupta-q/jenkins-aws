@@ -23,16 +23,15 @@ pipeline {
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
 				sh	"sudo yum install python-virtualenv -y"
-				sh 'python3 -m venv env'
- 				sh 'source env/bin/activate'
- 				sh "sudo easy_install-3.4 pip"
-				sh 'pip install -r requirements.txt --user'
+				sh	"python3 -m virtualenv venv"
+				sh	"source venv/bin/activate"
+				sh "pip install -r requirements.txt --user"
 				// sh "sudo python -m pip install pylint"
 				sh "sudo yum install xmlrunner junit -y"
 				// sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"
-				sh "python3 -m pip install pylint"
+				sh "python3 -mpip install pylint"
 				echo " BUILD stage completed Successfully"
 		
 			}

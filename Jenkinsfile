@@ -43,33 +43,31 @@ pipeline {
 				expression {params.REQUESTED_ACTION == 'Deploy'}
 			}
 			steps([$class: 'BapSshPromotionPublisherPlugin']) {
-				sh "sudo yum update"
-				sh "pip install flask"
-				sh "pip install pylint"
-				// sshPublisher(
-				// 	continueOnError: false, failOnError: true,
-				// 	publishers: [
-				// 		sshPublisherDesc(
-				// 			configName: "aishwarya-jenkins-deployment",
-				// 			verbose:  	true,
-				// 			transfers:[
-				// 				sshTransfer (execCommand: "/bin/rm -rf jenkins-aws")
-				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws")
-				// 				sshTransfer (sourceFiles:  "*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/templates")
-				// 				sshTransfer (sourceFiles: "templates/*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static")
-				// 				sshTransfer (sourceFiles: "static/*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/tests")
-				// 				sshTransfer (sourceFiles: "tests/*",)
-				// 				sshTransfer (execCommand: "/bin/python3 -m venv venv")
-				// 				sshTransfer (execCommand: ". venv/bin/activate")
-				// 				sshTransfer (execCommand: "/bin/pip3 install -r requirements.txt --user")
-				// 				sshTransfer (execCommand: "/bin/python3 appl.py &")
-				// 			]
-				// 			)
-				// 	]
-				// 	)
+
+				sshPublisher(
+					continueOnError: false, failOnError: true,
+					publishers: [
+						sshPublisherDesc(
+							configName: "aishwarya-jenkins-deployment",
+							verbose:  	true,
+							transfers:[
+								sshTransfer (execCommand: "/bin/rm -rf jenkins-aws")
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws")
+								sshTransfer (sourceFiles:  "*",)
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/templates")
+								sshTransfer (sourceFiles: "templates/*",)
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static")
+								sshTransfer (sourceFiles: "static/*",)
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/tests")
+								sshTransfer (sourceFiles: "tests/*",)
+								sshTransfer (execCommand: "/bin/python3 -m venv venv")
+								sshTransfer (execCommand: ". venv/bin/activate")
+								sshTransfer (execCommand: "/bin/pip3 install -r requirements.txt --user")
+								sshTransfer (execCommand: "/bin/python3 appl.py &")
+							]
+							)
+					]
+					)
 			}
 		}
 

@@ -26,7 +26,7 @@ pipeline {
 				sh 'python3 -m venv env'
  				sh 'source env/bin/activate'
  				sh "sudo easy_install-3.4 pip"
-				sh 'pip3 install -r requirements.txt --user'
+				sh 'pip install -r requirements.txt --user'
 				// sh "sudo python -m pip install pylint"
 				sh "sudo yum install xmlrunner junit -y"
 				// sh "sudo yum install -y pylint"

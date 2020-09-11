@@ -47,7 +47,7 @@ pipeline {
 					continueOnError: false, failOnError: true,
 					publishers: [
 						sshPublisherDesc(
-							configName: "aishwarya-jankins-deployment",
+							configName: "aishwarya-jenkins-deployment",
 							verbose:  	true,
 							transfers:[
 								sshTransfer (execCommand: "/bin/rm -rf jankins-app")

@@ -31,7 +31,7 @@ pipeline {
 				// sh "sudo yum install -y pylint"
 				//  change
 				// sh "export PATH=$HOME/.local/bin:$PATH"
-				sh "python3 -mpip install pylint"
+				sh "python3 -m pip install pylint"
 				echo " BUILD stage completed Successfully"
 		
 			}

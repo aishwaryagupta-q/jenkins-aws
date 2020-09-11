@@ -23,9 +23,9 @@ pipeline {
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
 				sh	"sudo yum install python-virtualenv -y"
-				sh	"python3 -m virtualenv venv"
+				sh	"python3 -m venv venv"
 				sh	"source venv/bin/activate"
-				sh "pip install -r requirements.txt --user"
+				sh "python3 -m pip install -r requirements.txt --user"
 				// sh "sudo python -m pip install pylint"
 				sh "sudo yum install xmlrunner junit -y"
 				// sh "sudo yum install -y pylint"

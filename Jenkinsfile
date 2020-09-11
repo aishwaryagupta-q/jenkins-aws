@@ -41,7 +41,7 @@ pipeline {
 				expression {params.REQUESTED_ACTION == 'Proceed'}
 			}
 			steps{
-				sh "python3 -m pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py --exit-0 "
+				sh "python3 -m pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py --exit-zero"
 				// sh "python3 -m pylint appl.py"
 				sh "python -m unittest discover tests/"				
 				echo " Test stage completed Successfully"

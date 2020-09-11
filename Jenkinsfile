@@ -51,14 +51,14 @@ pipeline {
 				// 			configName: "aishwarya-jenkins-deployment",
 				// 			verbose:  	true,
 				// 			transfers:[
-				// 				sshTransfer (execCommand: "/bin/rm -rf jankins-app")
-				// 				sshTransfer (execCommand: "/bin/mkdir jankins-app")
+				// 				sshTransfer (execCommand: "/bin/rm -rf jenkins-aws")
+				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws")
 				// 				sshTransfer (sourceFiles:  "*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jankins-app/templates")
+				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/templates")
 				// 				sshTransfer (sourceFiles: "templates/*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jankins-app/static")
+				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static")
 				// 				sshTransfer (sourceFiles: "static/*",)
-				// 				sshTransfer (execCommand: "/bin/mkdir jankins-app/tests")
+				// 				sshTransfer (execCommand: "/bin/mkdir jenkins-aws/tests")
 				// 				sshTransfer (sourceFiles: "tests/*",)
 				// 				sshTransfer (execCommand: "/bin/python3 -m venv venv")
 				// 				sshTransfer (execCommand: ". venv/bin/activate")

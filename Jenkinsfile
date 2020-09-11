@@ -22,8 +22,6 @@ pipeline {
 			}
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
-				sh "sudo yum update -y"
-				sh "sudo yum install -y python "
 				sh	"sudo yum install python-virtualenv -y"
 				sh	"python -m virtualenv venv"
 				sh	". venv/bin/activate"
@@ -43,7 +41,7 @@ pipeline {
 				expression {params.REQUESTED_ACTION == 'Proceed'}
 			}
 			steps{
-				sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py || return 0 "
+				sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py  "
 				sh "python -m unittest discover tests/"				
 				echo " Test stage completed Successfully"
 				// sh " shell script"

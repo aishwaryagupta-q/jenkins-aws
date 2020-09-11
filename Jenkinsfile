@@ -26,7 +26,7 @@ pipeline {
 				sh	"python -m virtualenv venv"
 				sh	". venv/bin/activate"
 				sh "pip install -r requirements.txt --user"
-				sh "sudo python -m pip install pylint"
+				// sh "sudo python -m pip install pylint"
 				sh "sudo yum install xmlrunner junit -y"
 				// sh "sudo yum install -y pylint"
 				//  change
@@ -41,7 +41,8 @@ pipeline {
 				expression {params.REQUESTED_ACTION == 'Proceed'}
 			}
 			steps{
-				sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py  "
+				// sh "pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py  "
+				sh "pylint appl.py"
 				sh "python -m unittest discover tests/"				
 				echo " Test stage completed Successfully"
 				// sh " shell script"

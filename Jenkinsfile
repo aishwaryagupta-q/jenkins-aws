@@ -44,6 +44,8 @@ pipeline {
 			}
 			steps([$class: 'BapSshPromotionPublisherPlugin']) {
 				sh "sudo yum update"
+				sh "pip install flask"
+				sh "pip install pylint"
 				// sshPublisher(
 				// 	continueOnError: false, failOnError: true,
 				// 	publishers: [
@@ -78,10 +80,10 @@ pipeline {
 	post{
 		always{
 			// always executed
-			echo "All Executed"
 			// cleanup
 			deleteDir()
 			cleanWs()
+			echo "All Executed"
 
 		}
 		success {

@@ -2,24 +2,22 @@ pipeline {
 	agent any
 
 	parameters{
-		// booleanParam(name: 'executeTests',defaultValue: true, description:"")
+		// User Manually Chooses Wherether to Build , Build and Test , Or to Build, Test and Deploy
 		choice(
 			name: 'REQUESTED_ACTION',
             choices: ['Build' , 'Test', "Deploy"],
             description: '')
-	}
-	environment{
-		FLASK_APP= 'appl.py'
-		// SERVER_CREDENTIALS = credentials('credentialID')
-		//credential binding plugin
+		}
 	}
 	stages {
 		stage("build"){
 			steps{
 				// sh "jenkins  ALL= NOPASSWD: ALL"
+				// Installing and configuring Virtualenv
 				sh	"sudo yum install python-virtualenv -y"
 				sh	"python3 -m venv venv"
 				sh	"source venv/bin/activate"
+				// Installing Requirements.txt file
 				sh "python3 -m pip install -r requirements.txt --user"
 				sh "python3 -m pip install pylint"
 				echo " BUILD stage completed Successfully"
@@ -27,21 +25,25 @@ pipeline {
 			}
 		}
 		stage("test"){
+			// Expression for checking User-Input in the firs step , 2 vvalues
 			when{
 				expression {params.REQUESTED_ACTION == 'Test' ||params.REQUESTED_ACTION == 'Deploy'}
 			}
 			steps{
+				// using custom Google COnfiguration file with Pulint
 				sh "python3 -m pylint --rcfile google.cfg --reports=n --disable=deprecated-module appl.py --exit-zero"
-				// sh "python3 -m pylint appl.py"
+				// Running Unittest on Networking Aspects
 				sh "python -m unittest discover tests/"				
 				echo " Test stage completed Successfully"
-				// sh " shell script"
 			}
 		}
 		stage("deploy"){
+			// Expression to check if User asked for deployment
 			when{
 				expression {params.REQUESTED_ACTION == 'Deploy'}
+
 			}
+			// Using Publish Over ssh Plugin
 			steps([$class: 'BapSshPromotionPublisherPlugin']) {
 
 				sshPublisher(
@@ -51,13 +53,18 @@ pipeline {
 							configName: "aishwarya-jenkins-deployment",
 							verbose:  	true,
 							transfers:[
+								// Clearing Dir and making new
 								sshTransfer (execCommand: "/bin/rm -rf jenkins-aws")
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws")
+								// Copying Data to EC2 Deploy instance t
 								sshTransfer (sourceFiles:  "*",)
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/templates")
+								// zcopying HTML Files
 								sshTransfer (sourceFiles: "templates/*",)
+								// Copying CSS files
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static")
 								sshTransfer (sourceFiles: "static/*",)
+								// Copying Test Scripts
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/tests")
 								sshTransfer (sourceFiles: "tests/*",)
 								sshTransfer (execCommand: "/bin/python3 -m venv venv")

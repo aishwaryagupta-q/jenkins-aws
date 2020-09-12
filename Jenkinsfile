@@ -63,6 +63,10 @@ pipeline {
 								sshTransfer (sourceFiles: "templates/*",)
 								// Copying CSS files
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static")
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static/css")
+								sshTransfer (sourceFiles: "static/css/*",)
+								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/static/js")
+								sshTransfer (sourceFiles: "static/js/*",)
 								sshTransfer (sourceFiles: "static/*",)
 								// Copying Test Scripts
 								sshTransfer (execCommand: "/bin/mkdir jenkins-aws/tests")
